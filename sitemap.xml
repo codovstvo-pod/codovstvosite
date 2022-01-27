@@ -13,6 +13,16 @@
   <priority>1.00</priority>
 </url>
 <url>
+  <loc>https://codovstvo.ru/match.html</loc>
+  <lastmod>2022-01-27T15:21:28+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codovstvo.ru/rainbow.html</loc>
+  <lastmod>2022-01-27T15:21:28+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://codovstvo.ru/snowmann.html</loc>
   <lastmod>2021-12-17T12:50:39+00:00</lastmod>
   <priority>0.80</priority>
