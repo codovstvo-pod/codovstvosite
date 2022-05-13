@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "452157863556",
+    "project_id": "changeoflight-43030",
+    "storage_bucket": "changeoflight-43030.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452157863556:android:006a8f676dfb74cb06f4d1",
+        "android_client_info": {
+          "package_name": "codovstvo.changeoflight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452157863556-7o9ic7kbhoj61km5l9ce6qvob0of4iqp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRM5fuzF7WE37eonlfKMhKbNW09IVxKYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452157863556-7o9ic7kbhoj61km5l9ce6qvob0of4iqp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
