@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | webtest</title>
+    <title>Unity WebGL Player | IdleNecronomicon</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -20,7 +20,7 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">webtest</div>
+        <div id="unity-build-title">IdleNecronomicon</div>
       </div>
     </div>
     <script>
@@ -56,15 +56,15 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/stok.loader.js";
+      var loaderUrl = buildUrl + "/BuildSize.loader.js";
       var config = {
-        dataUrl: buildUrl + "/stok.data.br",
-        frameworkUrl: buildUrl + "/stok.framework.js.br",
-        codeUrl: buildUrl + "/stok.wasm.br",
+        dataUrl: buildUrl + "/BuildSize.data.gz",
+        frameworkUrl: buildUrl + "/BuildSize.framework.js.gz",
+        codeUrl: buildUrl + "/BuildSize.wasm.gz",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "webtest",
-        productVersion: "1.0",
+        productName: "IdleNecronomicon",
+        productVersion: "1.2",
         showBanner: unityShowBanner,
       };
 
@@ -75,7 +75,7 @@
       // the canvas DOM size and WebGL render target sizes yourself.
       // config.matchWebGLToCanvasSize = false;
 
-      if (false) {
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         container.className = "unity-mobile";
         // Avoid draining fillrate performance on mobile devices,
         // and default/override low DPI mode on mobile browsers.

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "673378376411",
+    "project_id": "necronomicon-27e29",
+    "storage_bucket": "necronomicon-27e29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673378376411:android:4d5f785742686aa64a8afe",
+        "android_client_info": {
+          "package_name": "ru.codovstvo.tycoonnecronomicon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673378376411-07huc8gis4t8kb33vpp00nl8i5cchkah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwr1meFvXDHIKw_ZhGuhYqAQare3PZe7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673378376411-07huc8gis4t8kb33vpp00nl8i5cchkah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
