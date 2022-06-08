@@ -6,7 +6,7 @@
     <title>Unity WebGL Player | Merge3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -24,9 +24,6 @@
         <div id="unity-build-title">Merge3</div>
       </div>
     </div>
-    <script>
-      $("#unityContainer").find("button").click();
-    </script>
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
@@ -79,12 +76,15 @@
       // the canvas DOM size and WebGL render target sizes yourself.
       // config.matchWebGLToCanvasSize = false;
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         container.className = "unity-mobile";
         // Avoid draining fillrate performance on mobile devices,
         // and default/override low DPI mode on mobile browsers.
         config.devicePixelRatio = 1;
         unityShowBanner('WebGL builds are not supported on mobile devices.');
+      }else if(/Android/i.test(navigator.userAgent)) {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
       } else {
         canvas.style.width = "960px";
         canvas.style.height = "600px";
