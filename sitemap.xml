@@ -9,42 +9,57 @@
 
 <url>
   <loc>https://codovstvo.ru/</loc>
-  <lastmod>2021-12-17T12:49:08+00:00</lastmod>
+  <lastmod>2022-05-14T10:25:21+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/match.html</loc>
-  <lastmod>2022-01-27T15:21:28+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/necronomicon.html</loc>
+  <lastmod>2022-05-14T10:27:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/rainbow.html</loc>
-  <lastmod>2022-01-27T15:21:28+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/drift.html</loc>
+  <lastmod>2022-05-14T10:27:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/snowmann.html</loc>
-  <lastmod>2021-12-17T12:50:39+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/glow.html</loc>
+  <lastmod>2022-05-14T10:27:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/honey.html</loc>
-  <lastmod>2021-12-17T12:50:39+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/match.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/spiral.html</loc>
-  <lastmod>2021-12-17T12:50:39+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/rainbow.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/drawpopit.html</loc>
-  <lastmod>2021-12-17T12:54:04+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/snowman.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codovstvo.ru/bubble.html</loc>
-  <lastmod>2021-12-17T12:50:39+00:00</lastmod>
+  <loc>https://codovstvo.ru/pages/honey.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codovstvo.ru/pages/spiral.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codovstvo.ru/pages/draw.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codovstvo.ru/pages/bubble.html</loc>
+  <lastmod>2022-05-13T09:45:25+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
