@@ -406,9 +406,9 @@
                 canvas.focus()
             })
 
-            window.showOrderPayments = function(){
+            window.showOrderPayments = function(title){
                 instantGamesBridge.payments
-                .showOrderPayments("item1")
+                .showOrderPayments(title)
                 .then(orderResult => {
                     console.log(orderResult)
                 })
