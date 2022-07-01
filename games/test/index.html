@@ -413,6 +413,10 @@
                     console.log(orderResult)
                 })
             }
+
+            window.getIsPaymentSupported = function(){
+                return instantGamesBridge.payments.isSupported.toString()
+            }
         </script>
     </body>
 </html>
