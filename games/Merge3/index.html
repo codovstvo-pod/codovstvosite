@@ -428,11 +428,17 @@
             }
 
             window.onbeforeunload = function(){
-                console.log("hherfwer")
                 var xhr = new XMLHttpRequest()
-                xhr.open("POST", "https://codovstvo.ru/back/events/?key=" + instantGamesBridge.platform.key + "&userId=77517618&version=1.0&platform=vk&deviceType=Desktop&event=Session%20end", true)
+                xhr.open("POST", "https://codovstvo.ru/back/events/?key=" + instantGamesBridge.platform.key + "&userId=77517618&version=1.0&platform=vk&deviceType=Desktop&event=start%20loading", true)
                 xhr.send()
             }
+
+            window.onclose = function(){
+                var xhr = new XMLHttpRequest()
+                xhr.open("POST", "https://codovstvo.ru/back/events/?key=" + instantGamesBridge.platform.key + "&userId=77517618&version=1.0&platform=vk&deviceType=Desktop&event=close%20game", true)
+                xhr.send()
+            }
+
 
         </script>
     </body>
