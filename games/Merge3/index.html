@@ -417,6 +417,14 @@
             window.getIsPaymentSupported = function(){
                 return instantGamesBridge.payments.isSupported.toString()
             }
+
+            window.getReferrer() = function(){
+                let referrer = instantGamesBridge.platform.referrer
+                if (typeof referrer === 'string')
+                    return referrer
+                else
+                    return ''
+            }
         </script>
     </body>
 </html>
