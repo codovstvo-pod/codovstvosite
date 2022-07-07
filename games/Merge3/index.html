@@ -427,8 +427,11 @@
                     return ''
             }
 
-            window.onclose = function(){
-                console.log("hello")
+            window.onbeforeunload = function(){
+                console.log("hherfwer")
+                var xhr = new XMLHttpRequest()
+                xhr.open("POST", "https://codovstvo.ru/back/events/?key=" + instantGamesBridge.platform.key + "&userId=77517618&version=1.0&platform=vk&deviceType=Desktop&event=Session%20end", true)
+                xhr.send()
             }
 
         </script>
