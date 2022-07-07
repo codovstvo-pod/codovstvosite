@@ -428,9 +428,7 @@
             }
 
             window.onclose = function(){
-                var xhr = new XMLHttpRequest()
-                xhr.open("POST", "https://codovstvo.ru/back/events/?key=" + instantGamesBridge.platform.key + "&userId=77517618&version=1.0&platform=vk&deviceType=Desktop&event=Session%20end", true)
-                xhr.send()
+                console.log("hello")
             }
 
         </script>
