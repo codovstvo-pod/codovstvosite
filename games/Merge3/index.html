@@ -16,7 +16,7 @@
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                top: 0px;
+                top: 20%;
                 left: 0px;
                 font-size: 20px;
                 z-index: 10;
@@ -29,7 +29,10 @@
     <body>
         <canvas id="unity-canvas" style="width: 100%; height: 100%; background-image: url(./TemplateData/Loading.png); background-size: cover; background-attachment: fixed; background-position: center center; position: absolute; top: 0px; left: 0px;"></canvas>
         <div class="fullscreen"><img src="./TemplateData/Loading.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="SetFullscreen(1);" /></div>
-        <div id="loading"><span id="loading-text"></span></div>
+        <div id="loading">
+            <span id="loading-text"></span>
+            <div><img src="./TemplateData/Loader.png"/></div>
+        </div>
         <script src="Build/Merge3.loader.js"></script>
         <script src="./instant-games-bridge.js"></script>
         <script>
