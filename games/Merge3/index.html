@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Северное слияние</title>
+        <title>Merge3</title>
         <link rel="icon" type="image/x-icon" href="./TemplateData/favicon.ico">
         <style type="text/css">
             html, body {
@@ -12,17 +12,39 @@
                 padding: 0px;
                 margin: 0px;
             }
-            #loading {
+            /* #loading {
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                top: 0px;
+                top: 20%;
                 left: 0px;
                 font-size: 20px;
                 z-index: 10;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            } */
+
+            #loading{
+                position: relative;
+                max-width: max-content;
+            }
+
+            #progress-bar-backgroundImage {
+                width: 100%;
+                height: 100%;
+            }
+
+            #progress-bar{
+            position: absolute;
+            top: 47.5%;
+            left: 15.5%;
+            height: 9%;
+            background-color: green;
+            border-radius: 20px;
+            padding-left: 10px;
+            transition: 5s width;
+            max-width: calc(100% - 31.9%);
             }
         </style>
     </head>
@@ -30,7 +52,8 @@
         <canvas id="unity-canvas" style="width: 100%; height: 100%; background-image: url(./TemplateData/Loading.png); background-size: cover; background-attachment: fixed; background-position: center center; position: absolute; top: 0px; left: 0px;"></canvas>
         <div class="fullscreen"><img src="./TemplateData/Loading.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="SetFullscreen(1);" /></div>
         <div id="loading">
-            <span id="loading-text"></span>
+            <img id="progress-bar-backgroundImage" src="./TemplateData/Loader.png"/>
+            <div id="progress-bar"></div>
         </div>
         <script src="Build/Merge3.loader.js"></script>
         <script src="./instant-games-bridge.js"></script>
@@ -43,6 +66,11 @@
                 meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes'
                 document.getElementsByTagName('head')[0].appendChild(meta)
             }
+
+            const loaderProgessHandler = (elemId,progress)=> {
+                    const element = document.getElementById(elemId)
+                    element.style.width = `${progress}%` 
+            } 
 
             let canvas = document.getElementById('unity-canvas')
             let loading = document.getElementById('loading')
@@ -381,7 +409,8 @@
 
 
             window.onUnityLoadingProgressChanged = function(progress) {
-                loadingText.innerHTML = Math.ceil(progress * 100) + '%'
+                loaderProgessHandler('progress-bar',Math.ceil(progress * 100))
+                // loadingText.innerHTML = Math.ceil(progress * 100) + '%'
             }
 
             createUnityInstance(
