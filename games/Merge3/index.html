@@ -71,10 +71,13 @@
                     const element = document.getElementById(elemId)
                     element.style.width = `${progress}%` 
             } 
+            
+            var domLoad;
+            var loadTime;
+            window.addEventListener("DOMContentLoaded", () => {domLoad = Date.now()})
 
             let canvas = document.getElementById('unity-canvas')
             let loading = document.getElementById('loading')
-            // let loadingText = document.getElementById('loading-text')
 
             window.initialize = function() {
                 instantGamesBridge
@@ -409,7 +412,6 @@
 
 
             window.onUnityLoadingProgressChanged = function(progress) {
-                // loadingText.innerHTML = Math.ceil(progress * 100) + '%'
                 loaderProgessHandler('progress-bar',Math.ceil(progress * 100))
             }
 
@@ -430,9 +432,9 @@
             .then((unityInstance) => {
                 window.unityInstance = unityInstance
                 loading.remove()
+                loadTime = Date.now() - domLoad
             })
             .catch((error) => {
-                // loadingText.innerHTML = error
                 console.log("error 436 str")
             })
 
@@ -459,6 +461,10 @@
                     return referrer
                 else
                     return ''
+            }
+
+            window.getLoadTime = function(){
+                return loadTime
             }
 
         </script>
