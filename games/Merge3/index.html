@@ -18,20 +18,19 @@
             }
 
             #progress-bar-backgroundImage {
-                width: 30vw;
+                width: 100vw;
                 height: 100%;
             }
 
             #progress-bar{
-                position: absolute;
-                top: 47.5%;
-                left: 15.5%;
-                height: 9%;
-                background-color: green;
-                border-radius: 20px;
-                padding-left: 10px;
-                transition: 5s width;
-                max-width: calc(100% - 31.9%);
+            position: absolute;
+            top: 47.0%;
+            left: 15.7%;
+            max-width: calc(100% - 30.9%);
+            height: 9%;
+            background-color: green;
+            border-radius: 20px;
+            transition: 5s width;
             }
 
             #progress-container {
@@ -39,6 +38,16 @@
                 top: 80%;
                 left: 50%;
                 transform: translate(-50%,-50%);
+            }
+            @media only screen and (max-width: 1040px) {
+                #progress-bar-backgroundImage {
+                width: 70vw;
+            }
+            }
+            @media only screen and (max-width: 600px) {
+                #progress-bar-backgroundImage {
+                width: 90vw;
+            }
             }
         </style>
     </head>
