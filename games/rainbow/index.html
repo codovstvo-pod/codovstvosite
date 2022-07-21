@@ -1,46 +1,478 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Северное слияние</title>
+        <link rel="icon" type="image/x-icon" href="./TemplateData/favicon.ico">
+        <style type="text/css">
+            html, body {
+                width: 100%;
+                height: 100%;
+                padding: 0px;
+                margin: 0px;
+            }
+            #loading{
+                position: relative;
+                max-width: max-content;
+            }
 
-    <title>Cocos Creator | RainBow</title>
+            #progress-bar-backgroundImage {
+                width: 30vw;
+                height: 100%;
+            }
 
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="full-screen" content="yes"/>
-    <meta name="screen-orientation" content="portrait"/>
-    <meta name="x5-fullscreen" content="true"/>
-    <meta name="360-fullscreen" content="true"/>
-    
-    <meta name="renderer" content="webkit"/>
-    <meta name="force-rendering" content="webkit"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-    <link rel="icon" href="favicon.ico"/>
-  </head>
-  <body>
-    <h1 class="header">RainBow</h1>
+            #progress-bar{
+            position: absolute;
+            top: 47.0%;
+            left: 15.7%;
+            max-width: calc(100% - 30.9%);
+            height: 9%;
+            background-color: green;
+            border-radius: 20px;
+            transition: 5s width;
+            }
 
-    <div id="GameDiv" style="width: 960px; height: 1280px;">
-      <div id="Cocos3dGameContainer">
-        <canvas id="GameCanvas" width="960" height="1280"></canvas>
-      </div>
-    </div>
-    <p class="footer">
-      Created with <a href="https://www.cocos.com/products" title="Cocos Creator">Cocos Creator</a>
-    </p>
-    <!-- Polyfills bundle. -->
-<script src="src/polyfills.bundle.js" charset="utf-8"> </script>
+            #progress-container {
+                position: absolute;
+                top: 80%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            @media only screen and (max-width: 1040px) {
+                #progress-bar-backgroundImage {
+                width: 70vw;
+            }
+            }
+            @media only screen and (max-width: 600px) {
+                #progress-bar-backgroundImage {
+                width: 90vw;
+            }
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="unity-canvas" style="width: 100%; height: 100%; background-image: url(./TemplateData/Loading.png); background-size: cover; background-attachment: fixed; background-position: center center; position: absolute; top: 0px; left: 0px;"></canvas>
+        <div class="fullscreen"><img src="./TemplateData/Loading.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="SetFullscreen(1);" /></div>
+        <div id="progress-container">
+            <div id="loading">
+                <img id="progress-bar-backgroundImage" src="./TemplateData/Loader.png"/>
+                <div id="progress-bar"></div>
+            </div>
+        </div>
+        <script src="Build/rainbow.loader.js"></script>
+        <script src="./instant-games-bridge.js"></script>
+        <script>
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                // Mobile device style: fill the whole browser client area with the game canvas:
+                //background: #FFFFFF;
+                var meta = document.createElement('meta')
+                meta.name = 'viewport'
+                meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes'
+                document.getElementsByTagName('head')[0].appendChild(meta)
+            }
 
-<!-- SystemJS support. -->
-<script src="src/system.bundle.js" charset="utf-8"> </script>
+            const loaderProgessHandler = (elemId,progress)=> {
+                    const element = document.getElementById(elemId)
+                    // element.style.width = `${progress}%` 
+                    element.style.width = `${progress >= 100 ?100:progress}%` 
+            } 
+            
+            var domLoad;
+            var loadTime;
+            window.addEventListener("DOMContentLoaded", () => {domLoad = Date.now()})
 
-<!-- Import map -->
-<script src="src/import-map.json" type="systemjs-importmap" charset="utf-8"> </script>
+            let canvas = document.getElementById('unity-canvas')
+            let loading = document.getElementById('loading')
 
-<script>
-    System.import('./index.js').catch(function(err) { console.error(err); })
-</script>
-  </body>
+            window.initialize = function() {
+                instantGamesBridge
+                    .initialize()
+                    .then(() => {
+                        instantGamesBridge.advertisement.on(
+                            'interstitial_state_changed',
+                            state => { unityInstance.SendMessage('Bridge', 'OnInterstitialStateChanged', state) })
+
+                        instantGamesBridge.advertisement.on(
+                            'rewarded_state_changed',
+                            state => { unityInstance.SendMessage('Bridge', 'OnRewardedStateChanged', state) })
+
+                        unityInstance.SendMessage('Bridge', 'OnInitializationCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnInitializationCompleted', 'false')
+                    })
+            }
+
+            window.getPlatformId = function() {
+                return instantGamesBridge.platform.id
+            }
+
+            window.getPlatformLanguage = function() {
+                return instantGamesBridge.platform.language
+            }
+
+            window.getPlatformPayload = function() {
+                let payload = instantGamesBridge.platform.payload
+                if (typeof payload === 'string')
+                    return payload
+                else
+                    return ''
+            }
+
+
+            // device
+            window.getDeviceType = function() {
+                return instantGamesBridge.device.type
+            }
+
+
+            // player
+            window.getIsPlayerAuthorizationSupported = function() {
+                return instantGamesBridge.player.isAuthorizationSupported.toString()
+            }
+
+            window.getIsPlayerAuthorized = function() {
+                return instantGamesBridge.player.isAuthorized.toString()
+            }
+
+            window.getPlayerId = function() {
+                if (instantGamesBridge.player.id)
+                    return instantGamesBridge.player.id.toString()
+
+                return ''
+            }
+
+            window.getPlayerName = function() {
+                if (instantGamesBridge.player.name)
+                    return instantGamesBridge.player.name.toString()
+
+                return ''
+            }
+
+            window.getPlayerPhotos = function() {
+                if (instantGamesBridge.player.photos.length > 0)
+                    return JSON.stringify(instantGamesBridge.player.photos)
+
+                return ''
+            }
+
+            window.authorizePlayer = function(options) {
+                instantGamesBridge.player.authorize(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnAuthorizeCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnAuthorizeCompleted', 'false')
+                    })
+            }
+
+
+            // game
+            window.getGameData = function(key) {
+                instantGamesBridge.game.getData(key)
+                    .then(data => {
+                        if (data) {
+                            if (typeof data !== 'string')
+                                data = JSON.stringify(data)
+
+                            unityInstance.SendMessage('Bridge', 'OnGetGameDataCompletedSuccess', data)
+                        } else {
+                            unityInstance.SendMessage('Bridge', 'OnGetGameDataCompletedSuccess', '')
+                        }
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnGetGameDataCompletedFailed', '')
+                    })
+            }
+
+            window.setGameData = function(key, value) {
+                instantGamesBridge.game.setData(key, value)
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnSetGameDataCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnSetGameDataCompleted', 'false')
+                    })
+            }
+
+            window.deleteGameData = function(key) {
+                instantGamesBridge.game.deleteData(key)
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnDeleteGameDataCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnDeleteGameDataCompleted', 'false')
+                    })
+            }
+
+
+            // advertisement
+            window.getMinimumDelayBetweenInterstitial = function() {
+                return instantGamesBridge.advertisement.minimumDelayBetweenInterstitial.toString()
+            }
+
+            window.setMinimumDelayBetweenInterstitial = function(options) {
+                instantGamesBridge.advertisement.setMinimumDelayBetweenInterstitial(JSON.parse(options))
+            }
+
+            window.showInterstitial = function(options) {
+                instantGamesBridge.advertisement.showInterstitial(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnShowInterstitialCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnShowInterstitialCompleted', 'false')
+                    })
+            }
+
+            window.showRewarded = function() {
+                instantGamesBridge.advertisement.showRewarded()
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnShowRewardedCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnShowRewardedCompleted', 'false')
+                    })
+            }
+
+
+            // social
+            window.getIsShareSupported = function() {
+                return instantGamesBridge.social.isShareSupported.toString()
+            }
+
+            window.getIsInviteFriendsSupported = function() {
+                return instantGamesBridge.social.isInviteFriendsSupported.toString()
+            }
+
+            window.getIsJoinCommunitySupported = function() {
+                return instantGamesBridge.social.isJoinCommunitySupported.toString()
+            }
+
+            window.getIsCreatePostSupported = function() {
+                return instantGamesBridge.social.isCreatePostSupported.toString()
+            }
+
+            window.getIsAddToHomeScreenSupported = function() {
+                return instantGamesBridge.social.isAddToHomeScreenSupported.toString()
+            }
+
+            window.getIsAddToFavoritesSupported = function() {
+                return instantGamesBridge.social.isAddToFavoritesSupported.toString()
+            }
+
+            window.getIsRateSupported = function() {
+                return instantGamesBridge.social.isRateSupported.toString()
+            }
+
+            window.share = function(options) {
+                instantGamesBridge.social.share(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnShareCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnShareCompleted', 'false')
+                    })
+            }
+
+            window.inviteFriends = function() {
+                instantGamesBridge.social.inviteFriends()
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnInviteFriendsCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnInviteFriendsCompleted', 'false')
+                    })
+            }
+
+            window.joinCommunity = function(options) {
+                instantGamesBridge.social.joinCommunity(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnJoinCommunityCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnJoinCommunityCompleted', 'false')
+                    })
+            }
+
+            window.createPost = function(options) {
+                instantGamesBridge.social.createPost(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnCreatePostCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnCreatePostCompleted', 'false')
+                    })
+            }
+
+            window.addToHomeScreen = function() {
+                instantGamesBridge.social.addToHomeScreen()
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnAddToHomeScreenCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnAddToHomeScreenCompleted', 'false')
+                    })
+            }
+
+            window.addToFavorites = function() {
+                instantGamesBridge.social.addToFavorites()
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnAddToFavoritesCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnAddToFavoritesCompleted', 'false')
+                    })
+            }
+
+            window.rate = function() {
+                instantGamesBridge.social.rate()
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnRateCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnRateCompleted', 'false')
+                    })
+            }
+
+
+            // leaderboard
+            window.getIsLeaderboardSupported = function() {
+                return instantGamesBridge.leaderboard.isSupported.toString()
+            }
+
+            window.getIsLeaderboardNativePopupSupported = function() {
+                return instantGamesBridge.leaderboard.isNativePopupSupported.toString()
+            }
+
+            window.getIsLeaderboardMultipleBoardsSupported = function() {
+                return instantGamesBridge.leaderboard.isMultipleBoardsSupported.toString()
+            }
+
+            window.getIsLeaderboardSetScoreSupported = function() {
+                return instantGamesBridge.leaderboard.isSetScoreSupported.toString()
+            }
+
+            window.getIsLeaderboardGetScoreSupported = function() {
+                return instantGamesBridge.leaderboard.isGetScoreSupported.toString()
+            }
+
+            window.getIsLeaderboardGetEntriesSupported = function() {
+                return instantGamesBridge.leaderboard.isGetEntriesSupported.toString()
+            }
+
+            window.leaderboardSetScore = function(options) {
+                instantGamesBridge.leaderboard.setScore(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnLeaderboardSetScoreCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnLeaderboardSetScoreCompleted', 'false')
+                    })
+            }
+
+            window.leaderboardGetScore = function(options) {
+                instantGamesBridge.leaderboard.getScore(JSON.parse(options))
+                    .then(data => {
+                        if (data) {
+                            if (typeof data !== 'string')
+                                data = JSON.stringify(data)
+
+                            unityInstance.SendMessage('Bridge', 'OnLeaderboardGetScoreCompleted', data)
+                        } else {
+                            unityInstance.SendMessage('Bridge', 'OnLeaderboardGetScoreCompleted', '')
+                        }
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnLeaderboardGetScoreCompleted', 'false')
+                    })
+            }
+
+            window.leaderboardGetEntries = function(options) {
+                instantGamesBridge.leaderboard.getEntries(JSON.parse(options))
+                    .then(data => {
+                        if (data) {
+                            if (typeof data !== 'string')
+                                data = JSON.stringify(data)
+
+                            unityInstance.SendMessage('Bridge', 'OnLeaderboardGetEntriesCompletedSuccess', data)
+                        } else {
+                            unityInstance.SendMessage('Bridge', 'OnLeaderboardGetEntriesCompletedSuccess', '')
+                        }
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnLeaderboardGetEntriesCompletedFailed', 'false')
+                    })
+            }
+
+            window.leaderboardShowNativePopup = function(options) {
+                instantGamesBridge.leaderboard.showNativePopup(JSON.parse(options))
+                    .then(() => {
+                        unityInstance.SendMessage('Bridge', 'OnLeaderboardShowNativePopupCompleted', 'true')
+                    })
+                    .catch(error => {
+                        unityInstance.SendMessage('Bridge', 'OnLeaderboardShowNativePopupCompleted', 'false')
+                    })
+            }
+
+
+            window.onUnityLoadingProgressChanged = function(progress) {
+                loaderProgessHandler('progress-bar',Math.ceil(progress * 100))
+            }
+
+            createUnityInstance(
+                document.querySelector('#unity-canvas'),
+                {
+                    dataUrl: 'Build/rainbow.data.unityweb',
+                    frameworkUrl: 'Build/rainbow.framework.js.unityweb',
+                    codeUrl: 'Build/rainbow.wasm.unityweb',
+                    streamingAssetsUrl: 'StreamingAssets',
+                    companyName: 'DefaultCompany',
+                    productName: 'Merge3',
+                    productVersion: '1.0',
+                    // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+                    // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+                },
+                onUnityLoadingProgressChanged)
+            .then((unityInstance) => {
+                window.unityInstance = unityInstance
+                loading.remove()
+                loadTime = Date.now() - domLoad
+            })
+            .catch((error) => {
+                console.log("error 436 str")
+            })
+
+            window.addEventListener('pointerdown', () => {
+                window.focus()
+                canvas.focus()
+            })
+
+            window.showOrderPayments = function(title){
+                instantGamesBridge.payments
+                .showOrderPayments(title)
+                .then(orderResult => {
+                    console.log(orderResult)
+                })
+            }
+
+            window.getIsPaymentSupported = function(){
+                return instantGamesBridge.payments.isSupported.toString()
+            }
+
+            window.getReferrer = function(){
+                let referrer = instantGamesBridge.platform.referrer
+                if (typeof referrer === 'string')
+                    return referrer
+                else
+                    return ''
+            }
+
+            window.getLoadTime = function(){
+                return loadTime
+            }
+
+        </script>
+    </body>
 </html>
